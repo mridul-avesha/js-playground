@@ -1,8 +1,15 @@
 function getTime(){
     let now = new Date()
 
-    return `${now.getHours()} : ${now.getMinutes()} : ${now.getSeconds()}`
+    let hours = now.getHours().toString().padStart(2, '0')
+    let minutes = now.getMinutes().toString().padStart(2, '0')
+    let seconds = now.getSeconds().toString().padStart(2, '0')
+
+    return `${hours} : ${minutes} : ${seconds}`
 }
 
+setInterval(function(){
+    document.getElementById('clock').innerHTML = getTime()
+}, 1000)
 
-document.getElementById('clock').innerHTML = getTime()
+// hours>=12 ? "PM" : "AM"
