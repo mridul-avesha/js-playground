@@ -1,0 +1,18 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: cursive;
+    
+}
+
+#clock-container{
+    background: linear-gradient(to right, #2980b9, #6dd5fa, #ffffff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 100vh;
+    font-size: 100px;
+    font-weight: 700;
+}
