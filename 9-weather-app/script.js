@@ -1,20 +1,35 @@
-async function getWeather(city){
-    const API_KEY = "530085b01810851417f492d6d989b3a0";
+async function getWeather(city) {
+    const API_KEY = "";
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`;
 
-    try{
+    try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log("city:", data.name);
-        console.log("temp:", data.main.temp);
-        console.log("humidity:", data.main.humidity);
-        console.log("wind speed:", data.wind.speed);
-        console.log("weather:", data.weather[0].description);
-        console.log("icon:", data.weather[0].icon);
-    }
-    catch (error) {
+
+        document.querySelector(".errorDisplay").style.display = "none";
+
+        document.querySelector(".cityDisplay").textContent = data.name;
+        document.querySelector(".temperatureDisplay").textContent = `${data.main.temp}°C`;
+        document.querySelector(".humidityDisplay").textContent = `Humidity: ${data.main.humidity}%`;
+        document.querySelector(".descriptionDisplay").textContent = data.weather[0].description;
+        document.querySelector(".realFeelDisplay").textContent = `Feels like: ${data.main.feels_like}°C`;
+        document.querySelector(".windSpeedDisplay").textContent = `Wind: ${data.wind.speed} km/h`;
+
+        const iconCode = data.weather[0].icon;
+        const emojiMap = {
+            "01": "☀️", "02": "🌤️", "03": "☁️", "04": "☁️", 
+            "09": "🌧️", "10": "🌦️", "11": "🌩️", "13": "❄️", "50": "🌫️"
+        };
+        const emoji = emojiMap[iconCode.slice(0, 2)];
+        document.querySelector(".emojiDisplay").textContent = emoji;
+
+    } catch (error) {
         console.error("Error fetching weather data:", error);
+        document.querySelector(".errorDisplay").style.display = "block";
     }
 }
 
-getWeather(window.prompt("Enter city name"));
+const cityInput = document.getElementById("cityInput");
+document.getElementById("submitButton").onclick = () => {
+    getWeather(cityInput.value);
+};
